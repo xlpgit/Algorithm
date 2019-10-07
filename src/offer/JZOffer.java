@@ -6,7 +6,7 @@ import java.util.*;
 /**
  *
  */
-public class containsInteger {
+public class JZOffer {
 
 
 
@@ -342,6 +342,31 @@ public class containsInteger {
         }
     }
 
+    /**
+     * 题目描述
+     * 输入一个链表，输出该链表中倒数第k个结点。
+     * 思路：给定两个指针p1，p2都指向头节点，先让p2走k步；然后p1，p2同时走；
+     * 当p2指向为空时，此时p1指向正好是倒数第k个结点。
+     * 需要考虑：k大于node的个数(此时k为正，但是p2早为空)
+     *
+     */
+    public static ListNode FindKthToTail(ListNode head,int k) {
+        ListNode p1=head,p2=head;
+        while (k>0 && p2!=null){
+            p2=p2.next;
+            k--;
+        }
+        if(k>0 && p2==null){
+            return null;
+        }
+        while(p2!=null){
+            p1=p1.next;
+            p2=p2.next;
+        }
+        return p1;
+
+    }
+
 
     public static void main(String[] args) {
         int[] pre={1,2,3,4,5,6,7};
@@ -352,7 +377,7 @@ public class containsInteger {
         StringBuilder stringBuilder=new StringBuilder("abc");*/
         //stringBuffer.append(1)
         //NumberOf1(9);
-        reOrderArray(pre);
+        //reOrderArray(pre);
 
     }
 
