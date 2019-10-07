@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 public class InvokeTest {
     public static void main(String[] args) {
         try {
-            Class clazz = Class.forName("Count");
+            Class clazz = Class.forName("com.xlp.company.Count");
             Object count = clazz.newInstance();
             Method method = clazz.getDeclaredMethod("method", String.class);
             method.setAccessible(true);

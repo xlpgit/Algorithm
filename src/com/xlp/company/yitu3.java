@@ -1,3 +1,5 @@
+package com.xlp.company;
+
 import java.util.Scanner;
 
 public class yitu3 {
