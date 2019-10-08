@@ -4,7 +4,7 @@ import java.io.Console;
 import java.util.*;
 
 /**
- *
+ * 剑指 offer
  */
 public class JZOffer {
 
@@ -80,7 +80,7 @@ public class JZOffer {
         return list;
     }
 
-    class ListNode{
+    static class ListNode{
         int val;
         ListNode next=null;
         ListNode(int val){
@@ -368,6 +368,33 @@ public class JZOffer {
     }
 
 
+    /**
+     * 题目描述
+     * 输入一个链表，反转链表后，输出新链表的表头。
+     * 思路：首先判断链表是否为空，不为空时再进行操作。设三个指针p1，p2，p3，分别指向头结点、第二个结点、第三个结点。
+     * 以p2为视角，把p2结点原本指向p3的指针倒转，指向p1，以此类推。
+     */
+    public static ListNode ReverseList(ListNode head) {
+        if(head==null){
+            return null;
+        }
+        if(head.next==null){
+            return head;
+        }
+        ListNode p1=head;
+        ListNode p2=head.next;
+        ListNode p3=null;
+        while(p2!=null){
+            p3=p2.next;
+            p2.next=p1;
+            p1=p2;
+            p2=p3;
+        }
+        head.next=null;
+        head=p1;
+        return head;
+    }
+
     public static void main(String[] args) {
         int[] pre={1,2,3,4,5,6,7};
         //int[] in={3,2,4,1,6,5,7};
@@ -379,8 +406,31 @@ public class JZOffer {
         //NumberOf1(9);
         //reOrderArray(pre);
 
+        //初始化链表
+        ListNode head=new ListNode(3);
+        head.next=new ListNode(5);
+        ListNode temp=head.next;
+        temp.next=new ListNode(1);
+        temp=temp.next;
+        temp.next=new ListNode(4);
+        temp=temp.next;
+        temp.next=new ListNode(9);
+        //逆序前输出链表
+        temp=head;
+        while (temp!=null){
+            System.out.print(temp.val);
+            temp=temp.next;
+        }
+        System.out.println();
+        //逆序链表
+        ListNode node=ReverseList(head);
+        //逆序后输出链表
+        temp=node;
+        while (temp!=null){
+            System.out.print(temp.val);
+            temp=temp.next;
+        }
     }
-
 }
 
 
