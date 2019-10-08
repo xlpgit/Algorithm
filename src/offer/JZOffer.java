@@ -1,10 +1,12 @@
 package offer;
 
+import apple.laf.JRSUIUtils;
+
 import java.io.Console;
 import java.util.*;
 
 /**
- *
+ * 剑指 offer
  */
 public class JZOffer {
 
@@ -80,7 +82,7 @@ public class JZOffer {
         return list;
     }
 
-    class ListNode{
+    static class ListNode{
         int val;
         ListNode next=null;
         ListNode(int val){
@@ -368,6 +370,117 @@ public class JZOffer {
     }
 
 
+    /**
+     * 题目描述
+     * 输入一个链表，反转链表后，输出新链表的表头。
+     * 思路：首先判断链表是否为空，不为空时再进行操作。设三个指针p1，p2，p3，分别指向头结点、第二个结点、第三个结点。
+     * 以p2为视角，把p2结点原本指向p3的指针倒转，指向p1，以此类推。
+     */
+    public static ListNode ReverseList(ListNode head) {
+        if(head==null){
+            return null;
+        }
+        if(head.next==null){
+            return head;
+        }
+        ListNode p1=head;
+        ListNode p2=head.next;
+        ListNode p3=null;
+        while(p2!=null){
+            p3=p2.next;
+            p2.next=p1;
+            p1=p2;
+            p2=p3;
+        }
+        head.next=null;
+        head=p1;
+        return head;
+    }
+
+    /**
+     *题目描述：合并两个排序的链表
+     * 输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。
+     */
+    public static ListNode Merge(ListNode list1,ListNode list2) {
+        if(list1==null){
+            return list2;
+        }
+        if(list2==null){
+            return list1;
+        }
+        ListNode mergeHead=null;
+        ListNode current=null;
+        while(list1!=null && list2!=null){
+            if(list1.val<=list2.val){
+                if(mergeHead==null){
+                    mergeHead=current=list1;
+                }else {
+                    current.next = list1;
+                    current=current.next;
+                }
+                list1=list1.next;
+            }
+            else{
+                    if(mergeHead==null){
+                        mergeHead=current=list2;
+                    }else {
+                        current.next = list2;
+                        current=current.next;
+                    }
+                    list2=list2.next;
+                }
+        }
+        if(list1!=null && list2==null){
+            current.next=list1;
+        }
+        if(list2!=null && list1==null){
+            current.next=list2;
+        }
+        return mergeHead;
+
+    }
+
+    /**
+     * 输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
+     */
+    public boolean HasSubTree(TreeNode root1, TreeNode root2){
+        boolean flag=false;
+
+        if(root1!=null && root2!=null){
+            if(root1.val==root2.val){
+                //以根结点为起点是否包含tree2
+                flag=containsTree2(root1,root2);
+            }
+            //以左孩子当起点进行判断
+            if(!flag){
+                flag=containsTree2(root1.left,root2);
+            }
+            //以右孩子当起点进行判断
+            if(!flag){
+                flag= containsTree2(root1.right,root2);
+            }
+        }
+        return flag;
+    }
+
+    private boolean containsTree2(TreeNode root1, TreeNode root2) {
+        //树2遍历结束
+        if(root2==null){
+            return true;
+        }
+        //树2没有遍历完，树1遍历结束
+        if(root1==null){
+            return false;
+        }
+        //其中有一个结点没有匹配上，返回false
+        if(root1.val!=root2.val){
+            return false;
+        }
+        //根结点匹配之后分别去匹配左右子树
+        return containsTree2(root1.left,root2.left) && containsTree2(root1.right,root2.right);
+    }
+
+
     public static void main(String[] args) {
         int[] pre={1,2,3,4,5,6,7};
         //int[] in={3,2,4,1,6,5,7};
@@ -379,8 +492,49 @@ public class JZOffer {
         //NumberOf1(9);
         //reOrderArray(pre);
 
-    }
+        //初始化链表
+        /*ListNode head=new ListNode(3);
+        head.next=new ListNode(5);
+        ListNode temp=head.next;
+        temp.next=new ListNode(1);
+        temp=temp.next;
+        temp.next=new ListNode(4);
+        temp=temp.next;
+        temp.next=new ListNode(9);*/
+        //逆序前输出链表
+        //temp=head;
+        /*while (temp!=null){
+            System.out.print(temp.val);
+            temp=temp.next;
+        }
+        System.out.println();
+        //逆序链表
+        ListNode node=ReverseList(head);
+        //逆序后输出链表
+        temp=node;
+        while (temp!=null){
+            System.out.print(temp.val);
+            temp=temp.next;
+        }*/
+        ListNode head2=new ListNode(1);
+        head2.next=new ListNode(2);
+        ListNode temp2=head2.next;
+        temp2.next=new ListNode(3);
+        temp2=head2;
 
+        ListNode head3=new ListNode(2);
+        head3.next=new ListNode(3);
+        ListNode temp3=head3.next;
+        temp3.next=new ListNode(4);
+        temp3=head3;
+        //输出listnode的值
+        ListNode result=Merge(temp2,temp3);
+        while(result!=null){
+            System.out.println("val:"+result.val);
+            result=result.next;
+        }
+
+    }
 }
 
 
