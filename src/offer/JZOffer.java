@@ -480,6 +480,33 @@ public class JZOffer {
         return containsTree2(root1.left,root2.left) && containsTree2(root1.right,root2.right);
     }
 
+    /**
+     * 操作给定的二叉树，将其变换为源二叉树的镜像。
+     * 二叉树的镜像定义：源二叉树
+     *     	    8
+     *     	   /  \
+     *     	  6   10
+     *     	 / \  / \
+     *     	5  7 9 11
+     *     	镜像二叉树
+     *     	    8
+     *     	   /  \
+     *     	  10   6
+     *     	 / \  / \
+     *     	11 9 7  5
+     */
+    public void Mirror(TreeNode root){
+        if(root==null){
+            return;
+        }
+        //对根结点的左右子树进行交换
+        TreeNode temp=root.left;
+        root.left=root.right;
+        root.right=temp;
+        Mirror(root.left);
+        Mirror(root.right);
+    }
+
 
     public static void main(String[] args) {
         int[] pre={1,2,3,4,5,6,7};
