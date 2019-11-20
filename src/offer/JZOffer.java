@@ -507,6 +507,64 @@ public class JZOffer {
         Mirror(root.right);
     }
 
+    /**
+     * 顺时针打印矩阵
+     * 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，
+     * 例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+     * 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.
+     * 思路：设置四个变量，上下左右来控制循环，由左到右，由外到里进行控制。
+     */
+    public static ArrayList<Integer> printMatrix(int [][] matrix) {
+        ArrayList<Integer> list=new ArrayList<>();
+        int left=0;
+        int right=matrix[0].length-1;
+        int up=0;
+        //行数，一共有多少行。
+        int down=matrix.length-1;
+        if(matrix==null || matrix.length==0){
+            return list;
+        }
+        while(true){
+            //先对第一行的每列进行遍历  第一行
+            for(int col=left;col<=right;col++){
+                list.add(matrix[up][col]);
+            }
+            up++;
+            if(up>down){
+                break;
+            }
+
+            //对每一列的行进行遍历,先遍历最右层，最外端的。 最后一列
+            for(int row=up;row<=down;row++){
+                list.add(matrix[row][right]);
+            }
+            right--;
+            if(right<left){
+                break;
+            }
+
+            //最后一行
+            for(int col=right;col>=left;col--){
+                list.add(matrix[down][col]);
+            }
+            down--;
+            if(up>down){
+                break;
+            }
+
+            //相当于第一列,
+            for(int row=down;row>=up;row--){
+                list.add(matrix[row][left]);
+            }
+            left++;
+            if(left>right){
+                break;
+            }
+        }
+        return list;
+
+    }
+
 
     public static void main(String[] args) {
         int[] pre={1,2,3,4,5,6,7};
@@ -543,7 +601,8 @@ public class JZOffer {
             System.out.print(temp.val);
             temp=temp.next;
         }*/
-        ListNode head2=new ListNode(1);
+
+        /*ListNode head2=new ListNode(1);
         head2.next=new ListNode(2);
         ListNode temp2=head2.next;
         temp2.next=new ListNode(3);
@@ -559,6 +618,13 @@ public class JZOffer {
         while(result!=null){
             System.out.println("val:"+result.val);
             result=result.next;
+        }*/
+
+        //检验顺时针打印矩阵方法
+        int [][] martix={{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+        ArrayList<Integer> list=printMatrix(martix);
+        for(int single:list){
+            System.out.print(single+" ");
         }
 
     }
