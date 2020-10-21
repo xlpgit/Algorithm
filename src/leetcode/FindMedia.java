@@ -31,15 +31,17 @@ package leetcode;
  */
 public class FindMedia {
     public static void main(String[] args) {
-        int[] nums1={};
-        int[] nums2={2,3};
-        double d=findMedianSortedArrays(nums1,nums2);
+        int[] nums1 = {};
+        int[] nums2 = {2, 3};
+        double d = findMedianSortedArrays(nums1, nums2);
         System.out.println(d);
     }
 
     /**
      * 将两个数组合并，根据奇数还是偶数，返回中位数  --归并法
      * 注意：3/2=1；3/2.0=1.5
+     * 时间复杂度O(m+n)，空间复杂度O(m+n)
+     *
      * @param nums1
      * @param nums2
      * @return
@@ -92,6 +94,40 @@ public class FindMedia {
             return (nums[count / 2 - 1] + nums[count / 2]) / 2;
         } else {
             return nums[count / 2];
+        }
+    }
+
+    /**
+     * 不真的合并数组，找到中位数即可。len表示合并后数组的长度，len为奇数，中位数为第len/2+1；
+     * len为偶数，中位数为第len/2和len/2+1，遍历到len/2+1即可。
+     * 用left和right保存循环的结果，right表示现在循环结果，left表示上次循环结果。
+     * a,b分别表示指向a，b数组起始的位置，a如果还没有到最后并且此时 A 位置的数字小于 B 位置的数组，那么就可以后移了。也就是a＜m&&A[a]< B[b]。
+     * 但如果 B 数组此刻已经没有数字了，继续取数字 B[ b ]，则会越界，所以判断下 b 是否大于数组长度了，这样 || 后边的就不会执行了，也就不会导致错误了
+     * 所以增加为 a＜m&&(b >= n||A[a]<B[b])
+     * 时间复杂度O(m+n)，空间复杂度O(1)
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public static double findMedianSortedArrays2(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+        int len = m + n;
+        int left = -1, right = -1;
+        int a = 0, b = 0;
+        for (int i = 0; i <= len / 2; i++) {
+            left = right;
+            if (a < m && (b >= n || nums1[a] < nums2[b])) {
+                right = nums1[a++];
+            } else {
+                right = nums2[b++];
+            }
+        }
+        if (len % 2 == 0) {
+            return (left + right) / 2.0;
+        } else {
+            return right;
         }
     }
 }
